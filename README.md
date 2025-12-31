@@ -1,83 +1,84 @@
 # Email Spam Detection using Machine Learning
 
-This repository contains an end-to-end machine learning project that classifies
-emails as **Spam** or **Not Spam (Ham)**. The project demonstrates a complete
-workflow including data preprocessing, exploratory data analysis, feature
-engineering, model training, evaluation, and comparison.
+This repository contains a complete machine learning solution to classify emails as **Spam** or **Not Spam (Ham)**. It includes data preprocessing, exploratory analysis, feature engineering, model training, evaluation, and comparison of multiple approaches.
 
 ---
 
 ## 📌 Project Overview
 
-The goal of this task is to build and evaluate different machine learning models
-for spam email detection using textual data. Special emphasis is placed on proper
-feature engineering and evaluation metrics due to class imbalance.
+The task was to build a robust classifier to detect spam emails effectively. The dataset includes email subject lines and body text, labeled as spam or not spam. Due to class imbalance, evaluation focuses on precision, recall, and F1-score rather than accuracy alone.
 
 ---
 
-## 🗂 Dataset
+## 📂 Dataset
 
-- Each email consists of:
-  - `title`: Email subject
-  - `text`: Email body
-  - `type`: Label (`spam` or `not spam`)
+- **title**: Email subject
+- **text**: Email body content
+- **type**: Label indicating spam or not spam
 
-- The dataset is downloaded programmatically (Kaggle/Drive/Colab) to ensure
-  reproducibility across environments.
+The dataset can be downloaded using the Kaggle API or uploaded directly into the notebook.
 
 ---
 
-## 🔧 Feature Engineering
+## 🔍 Exploratory Data Analysis (EDA)
 
-- Text cleaning (lowercasing, removing URLs, numbers, punctuation)
-- **TF-IDF vectorization** with unigrams and bigrams
-- Experimental meta-features (email length)
-- **Sentence embeddings (transformer-based)** as an advanced approach
+Key trends discovered:
+- Spam emails tend to be longer (but not exclusively)
+- Simple count-based features like URL count or uppercase ratio did not strongly separate classes
+- Vocabulary analysis showed that common stopwords dominate raw frequency counts
+
+These insights motivated the choice of TF-IDF for text representation.
+
+---
+
+## 🛠 Feature Engineering
+
+1. **Text cleaning and preprocessing**
+2. **TF-IDF Vectorization**
+   - Unigrams and bigrams
+   - Stopword removal
+3. **Email length** (evaluated but shown to be not helpful)
+4. **Sentence embeddings** (advanced/bonus)
 
 ---
 
 ## 🤖 Models Implemented
 
-1. **Logistic Regression (TF-IDF)**  
-   - Serves as a classical baseline model
+### ✅ 1. Logistic Regression (Baseline)
+Trained using TF-IDF features — strong baseline but low recall on spam.
 
-2. **Logistic Regression (TF-IDF + Email Length)**  
-   - Evaluates the impact of simple meta-features
+### ❌ 2. Logistic Regression + Email Length
+Adding email length did not improve performance and was discarded.
 
-3. **Feed-Forward Neural Network (MLPClassifier)**  
-   - Trained on TF-IDF features
-   - Achieved the best spam detection performance
+### ⭐ 3. Neural Network (MLP Classifier)
+Feed-forward network trained on TF-IDF features — achieved the best balance of precision and recall.
 
-4. **Logistic Regression with Sentence Embeddings (Bonus)**  
-   - Uses transformer-based semantic representations
-
----
-
-## 📊 Evaluation Metrics
-
-Due to class imbalance, models are evaluated using:
-- Precision
-- Recall
-- F1-score
-- Confusion Matrix
-
-Spam recall is treated as a key metric to assess model effectiveness.
+### 🔁 4. Sentence Embeddings (Bonus)
+Transformer embeddings evaluated with Logistic Regression — stable but did not outperform the TF-IDF + neural network model.
 
 ---
 
-## ✅ Key Results
+## 📊 Evaluation Results
 
-- Logistic Regression performed well on non-spam emails but missed many spam cases.
-- Adding email length degraded performance and was discarded.
-- **TF-IDF + Neural Network achieved the best balance**, detecting 60% of spam emails
-  with strong precision.
-- Sentence embeddings provided stable results but did not outperform TF-IDF on this
-  small, keyword-driven dataset.
+| Model | Spam Precision | Spam Recall | F1-Score |
+|-------|----------------|-------------|----------|
+| Logistic Regression (TF-IDF) | 0.50 | 0.20 | 0.29 |
+| Logistic Regression (TF-IDF + length) | 0.00 | 0.00 | 0.00 |
+| Neural Network (MLP + TF-IDF) | **0.75** | **0.60** | **0.67** |
+| Logistic Regression (Sentence Embeddings) | 0.60 | 0.60 | 0.60 |
 
 ---
 
-## 🚀 How to Run
+## 📈 Insights
+
+- **TF-IDF features** are effective at capturing keyword/phrase-level signals that differentiate spam from not spam.
+- **Neural network (MLP)** further improves performance by capturing non-linear relationships.
+- **Sentence embeddings** provide semantic features but may require larger data to outperform TF-IDF.
+
+---
+
+## 🧪 How to Run
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/<bhanup23>/email-spam-detection-ml.git
+   git clone https://github.com/bhanup23/email-spam-detection-ml.git
