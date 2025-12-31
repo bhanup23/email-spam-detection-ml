@@ -80,4 +80,4 @@ Spam recall is treated as a key metric to assess model effectiveness.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/<your-username>/email-spam-detection-ml.git
+   git clone https://github.com/<bhanup23>/email-spam-detection-ml.git
